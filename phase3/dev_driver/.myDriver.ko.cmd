@@ -1,0 +1,1 @@
+cmd_/home/peng/dev_driver/myDriver.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/peng/dev_driver/myDriver.ko /home/peng/dev_driver/myDriver.o /home/peng/dev_driver/myDriver.mod.o
