@@ -53,8 +53,8 @@ void MainWindow::getTime()
 void MainWindow::disCpuInfo()
 {
     static double totalCpuTime=0,idleTime=0;
-    double totalCpuTime1,idleTime1;
-    double utilization;
+    double totalCpuTime1=0,idleTime1=0;
+    double utilization=0;
     string trash;
     ifstream fs;
     stringstream ss;
