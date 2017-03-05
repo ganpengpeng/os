@@ -10,7 +10,6 @@
 #include <unistd.h>
 #include <sys/utsname.h>
 
-
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -18,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setCentralWidget(ui->TabWidget);
     testTimer = new QTimer();
     this->setWindowTitle("TaskManagement");
     disCpuInfo(0);
@@ -37,7 +37,7 @@ void MainWindow::disSysInfo()
 {
     struct utsname buf;
     struct sysinfo info;
-    QString runtime;
+    QString hour,min,sec;
     time_t cur_time = 0;
     time_t boot_time = 0;
     ui->logname->setText(getenv("LOGNAME"));
@@ -58,12 +58,22 @@ void MainWindow::disSysInfo()
             boot_time = info.uptime - cur_time;
         }
         ui->boottime->setText(ctime(&boot_time));
-        runtime=QString::number(info.uptime/60/60);
-        if(runtime<2)
-            runtime+="hour";
+        hour=QString::number(info.uptime/60/60);
+        if(*hour.begin()<'2'&&hour.length()==1)
+            hour+=" hour ";
         else
-            runtime+="hours";
-
+            hour+=" hours ";
+        min=QString::number(info.uptime%3600/60);
+        if(*min.begin()<'2'&&min.length()==1)
+            min+=" minute ";
+        else
+            min+=" minutes ";
+        sec=QString::number(info.uptime%60);
+        if(*sec.begin()<'2'&&sec.length()==1)
+            sec+=" second";
+        else
+            sec+=" seconds";
+        ui->runtime->setText(hour+min+sec);
     }
 
 }
@@ -139,4 +149,9 @@ void MainWindow::disCpuInfo(int choose)
     }
     if(choose<4)
         disCpuInfo(choose+1);
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+
 }
