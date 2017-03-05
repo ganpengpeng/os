@@ -10,6 +10,9 @@
 #include <cstdlib>
 #include <unistd.h>
 #include <sys/utsname.h>
+#include <QDir>
+#include <QStringList>
+#include <QMessageBox>
 
 using namespace std;
 
@@ -47,11 +50,13 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setWindowTitle("TaskManagement");
     disCpuInfo(0);
     disSysInfo();
+    disProInfo();
     testTimer->start(1000);
     connect(testTimer,SIGNAL(timeout()),SLOT(disCpuInfo()));
     connect(testTimer,SIGNAL(timeout()),SLOT(disSysInfo()));
     connect(testTimer,SIGNAL(timeout()),SLOT(getTime()));
     connect(testTimer,SIGNAL(timeout()),SLOT(disMemInfo()));
+    connect(testTimer,SIGNAL(timeout()),SLOT(disProInfo()));
 }
 
 void MainWindow::getTime()
@@ -96,6 +101,95 @@ void MainWindow::disMemInfo()
     memusage = 100-(meminfo.freeram+meminfo.buffers+meminfo.cached)*100/meminfo.totalram;
     ui->memprogressBar->setValue(memusage);
     memstatus->setText(QString::number(memusage)+'%');
+}
+
+void MainWindow::disProInfo()
+{
+    ui->listWidget->clear();
+    QDir qd("/proc");
+    QStringList qsList = qd.entryList();
+    QString qs = qsList.join("\n");
+    QString id_of_pro;
+    bool ok;
+    int find_start = 3;
+    int a, b;
+    int nProPid; //进程PID
+    int number_of_sleep = 0, number_of_run = 0, number_of_zombie = 0;
+    int totalProNum = 0; //进程总数
+    QString proName; //进程名
+    QString proState; //进程状态
+    QString proPri; //进程优先级
+    QString proMem; //进程占用内存
+    QString tempStr; //读取文件信息字符串
+    QFile tempFile;
+    QListWidgetItem *title = new QListWidgetItem(QString::fromUtf8("PID\t") + "Name" + "\t\t" +
+                                                 "Status" + "\t" +
+                                                 "Priority" + "\t" +
+                                                 "Memory", ui->listWidget);
+    //循环读取进程
+    while (1)
+    {
+        //获取进程PID
+        a = qs.indexOf("\n", find_start);
+        b = qs.indexOf("\n", a+1);
+        find_start = b;
+        id_of_pro = qs.mid(a+1, b-a-1);
+        totalProNum++;
+        nProPid = id_of_pro.toInt(&ok, 10);
+        if(!ok)
+        {
+            break;
+        }
+
+        //打开PID所对应的进程状态文件
+        tempFile.setFileName("/proc/" + id_of_pro + "/stat");
+        if ( !tempFile.open(QIODevice::ReadOnly) )
+        {
+            QMessageBox::warning(this, tr("warning"), tr("The pid stat file can not open!"), QMessageBox::Yes);
+            continue;
+        }
+        tempStr = tempFile.readLine();
+        if (tempStr.length() == 0)
+           break;
+        a = tempStr.indexOf("(");
+        b = tempStr.indexOf(")");
+        proName = tempStr.mid(a+1, b-a-1);
+        proName.trimmed(); //删除两端的空格
+        proState = tempStr.section(" ", 2, 2);
+        proPri = tempStr.section(" ", 17, 17);
+        proMem = tempStr.section(" ", 22, 22);
+
+        switch ( proState.at(0).toLatin1() )
+        {
+            case 'S':   number_of_sleep++; break; //Sleep
+            case 'R':   number_of_run++; break; //Running
+            case 'Z':   number_of_zombie++; break; //Zombie
+            default :   break;
+        }
+
+        if (proName.length() >= 10)
+        {
+            QListWidgetItem *item = new QListWidgetItem(id_of_pro + "\t" +
+                                                        proName + "   \t" +
+                                                        proState + "\t" +
+                                                        proPri + "\t" +
+                                                        proMem, ui->listWidget);
+        }
+        else
+        {
+            QListWidgetItem *item = new QListWidgetItem(id_of_pro + "\t" +
+                                                        proName + "\t\t" +
+                                                        proState + "\t" +
+                                                        proPri + "\t" +
+                                                        proMem, ui->listWidget);
+        }
+        tempFile.close();
+        ui->runningpro->setNum(number_of_run);
+        ui->sleeppro->setNum(number_of_sleep);
+        ui->zombiepro->setNum(number_of_zombie);
+    }
+
+
 }
 
 MainWindow::~MainWindow()

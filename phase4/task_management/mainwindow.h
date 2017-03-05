@@ -20,6 +20,7 @@ public slots:
     void disSysInfo();
     void getTime();
     void disMemInfo();
+    void disProInfo();
 
 private slots:
     void on_pushButton_clicked();
