@@ -17,7 +17,7 @@
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
+    QMainWindow(parent),chooseItem(0),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -57,6 +57,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(testTimer,SIGNAL(timeout()),SLOT(getTime()));
     connect(testTimer,SIGNAL(timeout()),SLOT(disMemInfo()));
     connect(testTimer,SIGNAL(timeout()),SLOT(disProInfo()));
+    connect(ui->listWidget,SIGNAL(itemClicked(QListWidgetItem *item)),SLOT(setChooseItem(QListWidgetItem *item)));
+}
+
+void MainWindow::setChooseItem(QListWidgetItem *item)
+{
+    chooseItem=item;
 }
 
 void MainWindow::getTime()
@@ -169,27 +175,26 @@ void MainWindow::disProInfo()
 
         if (proName.length() >= 10)
         {
-            QListWidgetItem *item = new QListWidgetItem(id_of_pro + "\t" +
-                                                        proName + "   \t" +
-                                                        proState + "\t" +
-                                                        proPri + "\t" +
-                                                        proMem, ui->listWidget);
+            new QListWidgetItem(id_of_pro + "\t" +
+                                                proName + "   \t" +
+                                                proState + "\t" +
+                                                proPri + "\t" +
+                                                proMem, ui->listWidget);
         }
         else
         {
-            QListWidgetItem *item = new QListWidgetItem(id_of_pro + "\t" +
-                                                        proName + "\t\t" +
-                                                        proState + "\t" +
-                                                        proPri + "\t" +
-                                                        proMem, ui->listWidget);
+            new QListWidgetItem(id_of_pro + "\t" +
+                                                proName + "\t\t" +
+                                                proState + "\t" +
+                                                proPri + "\t" +
+                                                proMem, ui->listWidget);
         }
         tempFile.close();
         ui->runningpro->setNum(number_of_run);
         ui->sleeppro->setNum(number_of_sleep);
         ui->zombiepro->setNum(number_of_zombie);
     }
-
-
+    ui->listWidget->setCurrentItem(chooseItem);
 }
 
 MainWindow::~MainWindow()

@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include <QListWidget>
 #include <QMainWindow>
 #include <QLabel>
 namespace Ui {
@@ -21,6 +21,7 @@ public slots:
     void getTime();
     void disMemInfo();
     void disProInfo();
+    void setChooseItem(QListWidgetItem *item);
 
 private slots:
     void on_pushButton_clicked();
@@ -33,6 +34,7 @@ private:
     QLabel *cpustatus,*cpu;
     QLabel *memstatus,*mem;
     QLabel *timestatus,*times;
+    QListWidgetItem *chooseItem;
 };
 
 #endif // MAINWINDOW_H
