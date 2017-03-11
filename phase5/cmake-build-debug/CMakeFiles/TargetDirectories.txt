@@ -1,0 +1,3 @@
+/home/gp/operating_system/phase5/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/gp/operating_system/phase5/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/gp/operating_system/phase5/cmake-build-debug/CMakeFiles/phase5.dir
