@@ -57,6 +57,21 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(testTimer,SIGNAL(timeout()),SLOT(getTime()));
     connect(testTimer,SIGNAL(timeout()),SLOT(disMemInfo()));
     connect(testTimer,SIGNAL(timeout()),SLOT(disProInfo()));
+    QFile temp;
+    temp.setFileName("/proc/net/sockstat");
+    temp.open(QIODevice::ReadOnly);
+    QString tempstr = temp.readLine();
+    ui->label_90->setText(tempstr);
+    tempstr = temp.readLine();
+    ui->label_91->setText(tempstr);
+    tempstr = temp.readLine();
+    ui->label_92->setText(tempstr);
+    tempstr = temp.readLine();
+    ui->label_93->setText(tempstr);
+    tempstr = temp.readLine();
+    ui->label_94->setText(tempstr);
+    tempstr = temp.readLine();
+    ui->label_95->setText(tempstr);
 }
 
 void MainWindow::getTime()
@@ -348,4 +363,17 @@ void MainWindow::on_pushButton_2_clicked()
     if(QMessageBox::Yes == QMessageBox::warning(this, QString("WARNING"), QString("Are you sure to reboot?"),
                             QMessageBox::Yes|QMessageBox::No, QMessageBox::Yes))
         system("reboot");
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    QString pid = ui->lineEdit->text();
+    char buff[30];
+    bool ok;
+    int killpid;
+    killpid = pid.toInt(&ok, 10);
+    if(ok){
+        sprintf(buff,"kill %d",killpid);
+        system(buff);
+    }
 }

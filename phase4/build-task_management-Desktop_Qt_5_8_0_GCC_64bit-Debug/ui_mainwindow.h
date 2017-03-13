@@ -16,12 +16,14 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -30,7 +32,7 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QGridLayout *gridLayout_4;
+    QVBoxLayout *verticalLayout;
     QTabWidget *TabWidget;
     QWidget *cpuPage;
     QGridLayout *gridLayout;
@@ -45,15 +47,16 @@ public:
     QLabel *label_5;
     QProgressBar *progressBar_5;
     QWidget *processorPage;
-    QGridLayout *gridLayout_5;
-    QListWidget *listWidget;
-    QLabel *label_34;
+    QGridLayout *gridLayout_4;
+    QLineEdit *lineEdit;
     QLabel *runningpro;
-    QLabel *label_36;
-    QLabel *sleeppro;
-    QLabel *label_38;
     QLabel *zombiepro;
     QPushButton *pushButton_3;
+    QLabel *label_38;
+    QListWidget *listWidget;
+    QLabel *label_34;
+    QLabel *label_36;
+    QLabel *sleeppro;
     QWidget *memoryPage;
     QGridLayout *gridLayout_2;
     QLabel *totalswap;
@@ -106,6 +109,13 @@ public:
     QLabel *label_9;
     QLabel *logname;
     QLabel *label_7;
+    QWidget *tab;
+    QLabel *label_90;
+    QLabel *label_91;
+    QLabel *label_92;
+    QLabel *label_93;
+    QLabel *label_94;
+    QLabel *label_95;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -115,10 +125,10 @@ public:
         MainWindow->resize(698, 533);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        gridLayout_4 = new QGridLayout(centralWidget);
-        gridLayout_4->setSpacing(6);
-        gridLayout_4->setContentsMargins(11, 11, 11, 11);
-        gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
+        verticalLayout = new QVBoxLayout(centralWidget);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         TabWidget = new QTabWidget(centralWidget);
         TabWidget->setObjectName(QStringLiteral("TabWidget"));
         TabWidget->setTabPosition(QTabWidget::North);
@@ -207,53 +217,58 @@ public:
         TabWidget->addTab(cpuPage, QString());
         processorPage = new QWidget();
         processorPage->setObjectName(QStringLiteral("processorPage"));
-        gridLayout_5 = new QGridLayout(processorPage);
-        gridLayout_5->setSpacing(6);
-        gridLayout_5->setContentsMargins(11, 11, 11, 11);
-        gridLayout_5->setObjectName(QStringLiteral("gridLayout_5"));
-        listWidget = new QListWidget(processorPage);
-        listWidget->setObjectName(QStringLiteral("listWidget"));
-        listWidget->setSortingEnabled(false);
+        gridLayout_4 = new QGridLayout(processorPage);
+        gridLayout_4->setSpacing(6);
+        gridLayout_4->setContentsMargins(11, 11, 11, 11);
+        gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
+        lineEdit = new QLineEdit(processorPage);
+        lineEdit->setObjectName(QStringLiteral("lineEdit"));
 
-        gridLayout_5->addWidget(listWidget, 0, 0, 1, 7);
-
-        label_34 = new QLabel(processorPage);
-        label_34->setObjectName(QStringLiteral("label_34"));
-        label_34->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-
-        gridLayout_5->addWidget(label_34, 1, 0, 1, 1);
+        gridLayout_4->addWidget(lineEdit, 1, 6, 1, 1);
 
         runningpro = new QLabel(processorPage);
         runningpro->setObjectName(QStringLiteral("runningpro"));
 
-        gridLayout_5->addWidget(runningpro, 1, 1, 1, 1);
+        gridLayout_4->addWidget(runningpro, 1, 1, 1, 1);
 
-        label_36 = new QLabel(processorPage);
-        label_36->setObjectName(QStringLiteral("label_36"));
-        label_36->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        zombiepro = new QLabel(processorPage);
+        zombiepro->setObjectName(QStringLiteral("zombiepro"));
 
-        gridLayout_5->addWidget(label_36, 1, 2, 1, 1);
+        gridLayout_4->addWidget(zombiepro, 1, 5, 1, 1);
 
-        sleeppro = new QLabel(processorPage);
-        sleeppro->setObjectName(QStringLiteral("sleeppro"));
+        pushButton_3 = new QPushButton(processorPage);
+        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
 
-        gridLayout_5->addWidget(sleeppro, 1, 3, 1, 1);
+        gridLayout_4->addWidget(pushButton_3, 1, 7, 1, 1);
 
         label_38 = new QLabel(processorPage);
         label_38->setObjectName(QStringLiteral("label_38"));
         label_38->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        gridLayout_5->addWidget(label_38, 1, 4, 1, 1);
+        gridLayout_4->addWidget(label_38, 1, 4, 1, 1);
 
-        zombiepro = new QLabel(processorPage);
-        zombiepro->setObjectName(QStringLiteral("zombiepro"));
+        listWidget = new QListWidget(processorPage);
+        listWidget->setObjectName(QStringLiteral("listWidget"));
+        listWidget->setSortingEnabled(false);
 
-        gridLayout_5->addWidget(zombiepro, 1, 5, 1, 1);
+        gridLayout_4->addWidget(listWidget, 0, 0, 1, 8);
 
-        pushButton_3 = new QPushButton(processorPage);
-        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        label_34 = new QLabel(processorPage);
+        label_34->setObjectName(QStringLiteral("label_34"));
+        label_34->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        gridLayout_5->addWidget(pushButton_3, 1, 6, 1, 1);
+        gridLayout_4->addWidget(label_34, 1, 0, 1, 1);
+
+        label_36 = new QLabel(processorPage);
+        label_36->setObjectName(QStringLiteral("label_36"));
+        label_36->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+
+        gridLayout_4->addWidget(label_36, 1, 2, 1, 1);
+
+        sleeppro = new QLabel(processorPage);
+        sleeppro->setObjectName(QStringLiteral("sleeppro"));
+
+        gridLayout_4->addWidget(sleeppro, 1, 3, 1, 1);
 
         TabWidget->addTab(processorPage, QString());
         memoryPage = new QWidget();
@@ -546,8 +561,29 @@ public:
         gridLayout_3->addWidget(label_7, 2, 0, 1, 1);
 
         TabWidget->addTab(systemPage, QString());
+        tab = new QWidget();
+        tab->setObjectName(QStringLiteral("tab"));
+        label_90 = new QLabel(tab);
+        label_90->setObjectName(QStringLiteral("label_90"));
+        label_90->setGeometry(QRect(100, 60, 431, 17));
+        label_91 = new QLabel(tab);
+        label_91->setObjectName(QStringLiteral("label_91"));
+        label_91->setGeometry(QRect(100, 120, 461, 17));
+        label_92 = new QLabel(tab);
+        label_92->setObjectName(QStringLiteral("label_92"));
+        label_92->setGeometry(QRect(100, 190, 421, 17));
+        label_93 = new QLabel(tab);
+        label_93->setObjectName(QStringLiteral("label_93"));
+        label_93->setGeometry(QRect(100, 250, 421, 17));
+        label_94 = new QLabel(tab);
+        label_94->setObjectName(QStringLiteral("label_94"));
+        label_94->setGeometry(QRect(100, 310, 421, 17));
+        label_95 = new QLabel(tab);
+        label_95->setObjectName(QStringLiteral("label_95"));
+        label_95->setGeometry(QRect(100, 370, 421, 17));
+        TabWidget->addTab(tab, QString());
 
-        gridLayout_4->addWidget(TabWidget, 0, 0, 1, 1);
+        verticalLayout->addWidget(TabWidget);
 
         MainWindow->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(MainWindow);
@@ -556,7 +592,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        TabWidget->setCurrentIndex(3);
+        TabWidget->setCurrentIndex(4);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -571,13 +607,13 @@ public:
         label_4->setText(QApplication::translate("MainWindow", "CORE 3", Q_NULLPTR));
         label_5->setText(QApplication::translate("MainWindow", "CORE 4", Q_NULLPTR));
         TabWidget->setTabText(TabWidget->indexOf(cpuPage), QApplication::translate("MainWindow", "CPU", Q_NULLPTR));
-        label_34->setText(QApplication::translate("MainWindow", "Running :", Q_NULLPTR));
         runningpro->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
-        label_36->setText(QApplication::translate("MainWindow", "Sleep :", Q_NULLPTR));
-        sleeppro->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
-        label_38->setText(QApplication::translate("MainWindow", "Zombie :", Q_NULLPTR));
         zombiepro->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
         pushButton_3->setText(QApplication::translate("MainWindow", "End", Q_NULLPTR));
+        label_38->setText(QApplication::translate("MainWindow", "Zombie :", Q_NULLPTR));
+        label_34->setText(QApplication::translate("MainWindow", "Running :", Q_NULLPTR));
+        label_36->setText(QApplication::translate("MainWindow", "Sleep :", Q_NULLPTR));
+        sleeppro->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
         TabWidget->setTabText(TabWidget->indexOf(processorPage), QApplication::translate("MainWindow", "PROCESS", Q_NULLPTR));
         totalswap->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
         freeswap->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
@@ -628,6 +664,13 @@ public:
         logname->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
         label_7->setText(QApplication::translate("MainWindow", "Cpu :", Q_NULLPTR));
         TabWidget->setTabText(TabWidget->indexOf(systemPage), QApplication::translate("MainWindow", "SYSTEM", Q_NULLPTR));
+        label_90->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
+        label_91->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
+        label_92->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
+        label_93->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
+        label_94->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
+        label_95->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
+        TabWidget->setTabText(TabWidget->indexOf(tab), QApplication::translate("MainWindow", "NET", Q_NULLPTR));
     } // retranslateUi
 
 };
