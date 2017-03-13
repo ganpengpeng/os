@@ -17,7 +17,7 @@
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),chooseItem(0),
+    QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -57,12 +57,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(testTimer,SIGNAL(timeout()),SLOT(getTime()));
     connect(testTimer,SIGNAL(timeout()),SLOT(disMemInfo()));
     connect(testTimer,SIGNAL(timeout()),SLOT(disProInfo()));
-    connect(ui->listWidget,SIGNAL(itemClicked(QListWidgetItem *item)),SLOT(setChooseItem(QListWidgetItem *item)));
-}
-
-void MainWindow::setChooseItem(QListWidgetItem *item)
-{
-    chooseItem=item;
 }
 
 void MainWindow::getTime()
@@ -114,12 +108,10 @@ void MainWindow::disProInfo()
     ui->listWidget->clear();
     QDir qd("/proc");
     QStringList qsList = qd.entryList();
-    QString qs = qsList.join("\n");
     QString id_of_pro;
     bool ok;
-    int find_start = 3;
+    int nextpro=2;
     int a, b;
-    int nProPid; //进程PID
     int number_of_sleep = 0, number_of_run = 0, number_of_zombie = 0;
     int totalProNum = 0; //进程总数
     QString proName; //进程名
@@ -128,7 +120,7 @@ void MainWindow::disProInfo()
     QString proMem; //进程占用内存
     QString tempStr; //读取文件信息字符串
     QFile tempFile;
-    QListWidgetItem *title = new QListWidgetItem(QString::fromUtf8("PID\t") + "Name" + "\t\t" +
+    new QListWidgetItem(QString::fromUtf8("PID\t") + "Name" + "\t\t" +
                                                  "Status" + "\t" +
                                                  "Priority" + "\t" +
                                                  "Memory", ui->listWidget);
@@ -136,17 +128,13 @@ void MainWindow::disProInfo()
     while (1)
     {
         //获取进程PID
-        a = qs.indexOf("\n", find_start);
-        b = qs.indexOf("\n", a+1);
-        find_start = b;
-        id_of_pro = qs.mid(a+1, b-a-1);
-        totalProNum++;
-        nProPid = id_of_pro.toInt(&ok, 10);
+        id_of_pro = qsList[nextpro++];
+        id_of_pro.toInt(&ok, 10);
         if(!ok)
         {
             break;
         }
-
+        totalProNum++;
         //打开PID所对应的进程状态文件
         tempFile.setFileName("/proc/" + id_of_pro + "/stat");
         if ( !tempFile.open(QIODevice::ReadOnly) )
@@ -194,7 +182,6 @@ void MainWindow::disProInfo()
         ui->sleeppro->setNum(number_of_sleep);
         ui->zombiepro->setNum(number_of_zombie);
     }
-    ui->listWidget->setCurrentItem(chooseItem);
 }
 
 MainWindow::~MainWindow()
@@ -351,10 +338,14 @@ void MainWindow::disCpuInfo(int choose)
 
 void MainWindow::on_pushButton_clicked()
 {
-    system("shutdown");
+    if(QMessageBox::Yes == QMessageBox::warning(this, QString("WARNING"), QString("Are you sure to restart?"),
+                            QMessageBox::Yes|QMessageBox::No, QMessageBox::Yes))
+        system("shutdown -h now");
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    system("shutdown -r");
+    if(QMessageBox::Yes == QMessageBox::warning(this, QString("WARNING"), QString("Are you sure to reboot?"),
+                            QMessageBox::Yes|QMessageBox::No, QMessageBox::Yes))
+        system("reboot");
 }

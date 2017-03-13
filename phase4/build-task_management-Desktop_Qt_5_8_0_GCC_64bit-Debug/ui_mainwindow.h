@@ -22,7 +22,6 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -108,7 +107,6 @@ public:
     QLabel *logname;
     QLabel *label_7;
     QStatusBar *statusBar;
-    QToolBar *toolBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -555,13 +553,10 @@ public:
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
-        toolBar = new QToolBar(MainWindow);
-        toolBar->setObjectName(QStringLiteral("toolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
 
         retranslateUi(MainWindow);
 
-        TabWidget->setCurrentIndex(1);
+        TabWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -633,7 +628,6 @@ public:
         logname->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
         label_7->setText(QApplication::translate("MainWindow", "Cpu :", Q_NULLPTR));
         TabWidget->setTabText(TabWidget->indexOf(systemPage), QApplication::translate("MainWindow", "SYSTEM", Q_NULLPTR));
-        toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", Q_NULLPTR));
     } // retranslateUi
 
 };
